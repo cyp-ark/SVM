@@ -241,13 +241,22 @@ plt.ylim([min(df3['x2'])-1,max(df3['x2'])+1])
 
 plt.show()
 ```
+<br/>
+<p align="center"> < C값에 따른 rbf kernel SVM의 분류 경계면 변화 >
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmrbfc.png">
-<br/> < C값에 따른 rbf kernel SVM의 분류 경계면 변화 >
+<br/>
+<p align="left">앞선 두 예시와 마찬가지로 C값을 조정해 rbf 커널을 적용한 서포트 벡터 머신의 경계면 변화를 살펴보자. 경계면을 넘는것에 대한 패널티가 클 수록 마진의 폭이 좁아지면서 좀 더 원래의 데이터 모양을 따라가는 경향이 있다.
 
+
+<br/>
+<br/>
+<p align="center">< gamma값에 따른 rbf kernel SVM의 분류 경계면 변화 >
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmrbfgamma.png">
-<br/> < gamma값에 따른 rbf kernel SVM의 분류 경계면 변화 >
+<br/>
+<p align="left"> rbf 커널에서의 하이퍼 파라미터인 gamma를 조정할 경우 서포트 벡터 머신의 경계면의 변화를 살펴보자. gamma값이 작으면 경계면의 구조가 매우 단순해지고 평평한 모양을 띄는 것을 알 수 있다. 반대로 gamma 값이 커지면 경계면이 복잡한 형태를 띄면서 데이터 점들에 거의 fit하게 경계면이 만들어지는 것을 확인할 수 있다.
 
 ### 4) Multiclass SVM
+지금까지는 
 ```python
 X4, y4 = datasets.make_blobs(random_state=17)
 
@@ -257,6 +266,7 @@ df4['class'] = y4
 plt.scatter('x1', 'x2', c='class', data=df4)
 ```
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/multiclasssvmdata.png">
+
 
 ```python
 linear_svm4 = LinearSVC().fit(X4,y4)
