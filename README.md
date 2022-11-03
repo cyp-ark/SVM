@@ -60,6 +60,9 @@ plt.show()
 
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmresult.png">
 
+<br/>
+<p align="left"> 여기서 C는 마진을 최대로 하는 분류 경계면을 만드는 과정에서 분류 경계면을 넘을 경우 발생하는 패널티 항(penalty term)이다. 즉 C값이 작을 수록 분류 경계면을 넘는 점들에 대해 패널티를 적게 부과하기 때문에 더 많은 점들이 분류 경계면을 넘을 것이며 그만큼 마진의 폭 또한 커질 것이다. 반대로 C값이 클수록 분류 경계면을 넘는 점들에 대해 패널티를 크게 부과하기 때문에 분류경계면을 되도록 넘지 않도록 하면서 작은 폭의 마진을 가지는 분류 경계면이 만들어질 것이다.
+
 ### 2. Non-linear SVM
 그렇다면 다음 예제를 한번 보자.
 
