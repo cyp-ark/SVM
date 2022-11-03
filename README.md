@@ -20,7 +20,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 ```
-### 1. Linear SVM
+### 1) Linear SVM
 가장 기본적인 선형 서포트 벡터 머신이다. 두 범주를 잘 나누어주면서 마진을 최대로 하는 선형 분류 경계면을 만드는 것을 목표로 한다.
 ```python
 #데이터 셋 생성
@@ -38,7 +38,7 @@ plt.scatter('x1','x2',c='class',data=df)
 
 
 ```python
-#선형 서포트 벡터 머신 정의 및 분류 결과 플롯
+#선형 서포트 벡터 머신 정의 및 분류 결과 
 from sklearn.svm import LinearSVC
 
 linear_svm = LinearSVC(C=1,max_iter=10e4).fit(X,y)
@@ -63,7 +63,7 @@ plt.show()
 <br/>
 <p align="left"> 여기서 C는 마진을 최대로 하는 분류 경계면을 만드는 과정에서 분류 경계면을 넘을 경우 발생하는 패널티 항(penalty term)이다. 즉 C값이 작을 수록 분류 경계면을 넘는 점들에 대해 패널티를 적게 부과하기 때문에 더 많은 점들이 분류 경계면을 넘을 것이며 그만큼 마진의 폭 또한 커질 것이다. 반대로 C값이 클수록 분류 경계면을 넘는 점들에 대해 패널티를 크게 부과하기 때문에 분류경계면을 되도록 넘지 않도록 하면서 작은 폭의 마진을 가지는 분류 경계면이 만들어질 것이다.
 
-### 2. Non-linear SVM
+### 2) Non-linear SVM
 그렇다면 다음 예제를 한번 보자.
 
 
@@ -174,10 +174,11 @@ plt.show()
 
 서포트 벡터 머신은 본래 선형분류기이지만 선형이 아닌 기존의 저차원 데이터를 고차원으로 맵핑시켜 고차원 공간에서 서포트 벡터 머신을 통해 선형 분류 경계면을 만든 후 다시 원래의 저차원 공간으로 복원시키면 선형 분류기 이지만 비선형 분류 경계면 처럼 동작하게 할 수 있다.
     
-### 3. Kernel SVM
+### 3) Kernel SVM
 이전 예제의 경우 데이터 값들이 원점을 중심으로 두 분류가 분포 되어있었고, 비교적 간단한 고차원으로의 맵핑을 통해 서포트 벡터 머신을 이용한 분류 경계면을 찾을 수 있었다. 그렇다면 우리는 비선형적인 분포를 가진 데이터에 대해 서포트 벡터 머신을 적용해 분류 경계면을 찾으려고 하면 그때마다 항상 어떠한 임의의 고차원에 대해서 데이터를 맵핑한 후 서포트 벡터 머신을 적용해야할까? 정답은 "아니오"이다.
 <br/><br/>
-앞선 예제와 같이 저차원의 데이터를 고차원으로 맵핑 시켜주는 함수를 커널함수라고 한다.
+다음의 예시 데이터를 보면 방금 전 비선형 서포트 벡터 머신과 같이 현재 차원에서는 선형 분류기를 이용해 두 범주를 분류 할 수 없으니, 고차원으로 맵핑시킨 후 서포트 벡터 머신을 사용해야 한다는 것을 알 수 있다. 
+ 
 
 ```python
 X3, y3 = datasets.make_moons(noise=0.1,random_state=0)
@@ -193,6 +194,14 @@ plt.show()
 ```
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmdata.png">
 
+앞선 예제와 같이 저차원의 데이터를 고차원으로 맵핑 시켜주는 함수를 커널함수라고 한다. 싸이킷런의 서포트 벡터 머신 패키지에서는 총 4가지의 커널 함수를 제공하고 있다.
+- linear : $< x,x'>$
+- polynomial : $(\gamma < x,x' > + r)^{d}$
+- rbf(gaussian) : $exp(-\gamma||x-x'||^2)$
+- sigmoid : $tanh(\gamma < x,x' > +r)$
+
+그 중 일반적으로 많이 사용하는 rbf 커널을 이용해 서포트 벡터 머신을 적용해보도록 하자.
+<br/>
 ```python
 from sklearn.svm import SVC
 
@@ -238,7 +247,7 @@ plt.show()
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmrbfgamma.png">
 <br/> < gamma값에 따른 rbf kernel SVM의 분류 경계면 변화 >
 
-### 4. Multiclass SVM
+### 4) Multiclass SVM
 ```python
 X4, y4 = datasets.make_blobs(random_state=17)
 
@@ -269,9 +278,12 @@ plt.show()
 ```
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/multiclasssvm.png">
 
+## 3. 결론
+
+
 
 
 ## 4. Reference
 1. 데이터 사이언스 스쿨 - 5.2 분류용 가상 데이터 생성 [[Link]](https://datascienceschool.net/03%20machine%20learning/09.02%20%EB%B6%84%EB%A5%98%EC%9A%A9%20%EA%B0%80%EC%83%81%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%83%9D%EC%84%B1.html)
 2. 초롱스쿨 - [Python]분류분석 - SVM(Support Vector Machine) [[Link]](https://studychfhd.tistory.com/224)
-3. scikit learn - 1.4 Support Vector Machinces [[Link]](https://scikit-learn.org/stable/modules/svm.html)
+3. scikit learn - 1.4 Support Vector Machines [[Link]](https://scikit-learn.org/stable/modules/svm.html)
