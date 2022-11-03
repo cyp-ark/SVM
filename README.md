@@ -177,6 +177,63 @@ plt.show()
 ### 3. Kernel SVM
 이전 예제의 경우 데이터 값들이 원점을 중심으로 두 분류가 분포 되어있었고, 비교적 간단한 고차원으로의 맵핑을 통해 서포트 벡터 머신을 이용한 분류 경계면을 찾을 수 있었다. 그렇다면 우리는 비선형적인 분포를 가진 데이터에 대해 서포트 벡터 머신을 적용해 분류 경계면을 찾으려고 하면 그때마다 항상 어떠한 임의의 고차원에 대해서 데이터를 맵핑한 후 서포트 벡터 머신을 적용해야할까? 정답은 "아니오"이다.
 <br/><br/>
-앞선 예제와 같이 저차원의 데이터를 고차원으로 맵핑 시켜주는 함수를 $\pi()$
+앞선 예제와 같이 저차원의 데이터를 고차원으로 맵핑 시켜주는 함수를 커널함수라고 한다.
+
+```python
+X3, y3 = datasets.make_moons(noise=0.1,random_state=0)
+df3 = pd.DataFrame(X3,columns=['x1','x2'])
+df3['class'] = y3
+
+plt.xlim([min(df3['x1'])-1,max(df3['x1'])+1])
+plt.ylim([min(df3['x2'])-1,max(df3['x2'])+1])
+
+plt.scatter('x1','x2',c='class',data=df3)
+
+plt.show()
+```
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmdata.png">
+
+```python
+from sklearn.svm import SVC
+
+svm = SVC(C=1,gamma=0.5,kernel="rbf")
+svm.fit(X3,y3)
+```
+```python
+from sklearn.inspection import DecisionBoundaryDisplay
+
+ax = plt.gca()
+
+plt.scatter('x1','x2',c='class',data=df3)
+
+
+DecisionBoundaryDisplay.from_estimator(
+    svm,
+    X3,
+    plot_method="contour",
+    colors="k",
+    levels=[-1, 0, 1],
+    alpha=0.5,
+    linestyles=["--", "-", "--"],
+    ax=ax
+)
+
+ax.scatter(
+    svm.support_vectors_[:, 0],
+    svm.support_vectors_[:, 1],
+    s=100,
+    linewidth=1,
+    facecolors="none",
+    edgecolors="k",
+)
+
+plt.xlim([min(df3['x1'])-1,max(df3['x1'])+1])
+plt.ylim([min(df3['x2'])-1,max(df3['x2'])+1])
+
+plt.show()
+```
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmrbfc.png">
+
+
 ### 4. Multiclass SVM
 
