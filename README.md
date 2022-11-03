@@ -34,7 +34,7 @@ plt.scatter('x1','x2',c='class',data=df)
 ```
 
 
-<p align="center><img src="https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmdata.png">
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmdata.png">
 
 
 ```python
@@ -47,9 +47,10 @@ line = np.linspace(-15,15)
 
 plt.scatter('x1','x2',c='class',data=df)
 
-for coef, intercept, color in zip(linear_svm.coef_,linear_svm.intercept_,["black","blue","red"]):
-    plt.plot(line,-(line*coef[0]+intercept)/coef[1],c=color)
-    plt.fill_between(line,-(line*coef[0]+intercept+1)/coef[1],-(line*coef[0]+intercept-1)/coef[1],color=color,alpha=0.3)
+coef = linear_svm.coef_
+intercept = linear_svm.intercept_
+plt.plot(line,-(line*coef[:,0]+intercept)/coef[:,1],c=color)
+plt.fill_between(line,-(line*coef[:,0]+intercept+1)/coef[:,1],-(line*coef[:,0]+intercept-1)/coef[:,1],color=color,alpha=0.3)
 
 plt.xlim([min(df['x1'])-1,max(df['x1'])+1])
 plt.ylim([min(df['x2'])-1,max(df['x2'])+1])
@@ -57,9 +58,12 @@ plt.ylim([min(df['x2'])-1,max(df['x2'])+1])
 plt.show()
 ```
 
-![](https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmresult.png)
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmresult.png">
 
 ### 2. Non-linear SVM
+그렇다면 다음 예제를 한번 보자.
+
+
 ```python
 X2, y2 = datasets.make_gaussian_quantiles(n_classes=2,random_state=4)
 
@@ -69,9 +73,96 @@ df2['class'] = y2
 plt.scatter('x1','x2',c='class',data=df2)
 ```
 
-![](https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm.png)
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm.png">
+    
+이 데이터 셋의 경우 원점을 기준으로 원형으로 두 분류의 값이 분포하고 있는 것으로 보인다. 이에 대해 기존의 선형 서포트 벡터 머신을 이용하여 두 범주를 잘 구별할 수 있는 선형 분류기를 만들어낼 수 있을까? 이를 한번 적용에 본 결과는 다음과 같다.
 
 
+```python
+#일반적인 Linear SVM으로 분류해보기
+linear_svm2 = LinearSVC(C=1,max_iter=10e4).fit(X2,y2)
+
+plt.scatter('x1','x2',c='class',data=df2)
+
+coef,intercept = linear_svm2.coef_, linear_svm2.intercept_
+plt.plot(line,-(line*coef[:,0]+intercept)/coef[:,1],c=color)
+plt.fill_between(line,-(line*coef[:,0]+intercept+1)/coef[:,1],-(line*coef[:,0]+intercept-1)/coef[:,1],color=color,alpha=0.3)
+
+plt.xlim([min(df2['x1'])-1,max(df2['x1'])+1])
+plt.ylim([min(df2['x2'])-1,max(df2['x2'])+1])
+
+plt.show()
+```
+
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinear.png">
+
+
+두 분류의 데이터가 원형으로 분포하고 있기 때문에 서포트 벡터 머신이 명확한 선형 경계면을 만들어내지 못한 것을 알 수 있다. 그렇다면 이러한 데이터의 분포에 대해서는 어떻게 서포트 벡터 머신을 적용할 수 있을까?<br/>
+현재의 데이터에서 x,y 이외에 새로운 좌표축인 z를 
+
+    
+```python
+X2_new = np.hstack((X2,(X2[:,0]**2 + X2[:,1]**2).reshape(-1,1)))
+
+df2 = pd.DataFrame(X2_new,columns=['x1','x2','x3'])
+df2['class'] = y2
+
+    
+fig = plt.figure(figsize=(6,6))
+
+ax = fig.add_subplot(111,projection='3d')
+ax.scatter(df2['x1'],df2['x2'],df2['x3'],c='class',data=df2)
+
+
+ax.view_init(0,45)
+
+plt.show()
+```
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm3d.png">
+
+```python
+linear_svm3 = LinearSVC().fit(X2_new,y2)
+#%%
+coef, intercept = linear_svm3.coef_.ravel(), linear_svm3.intercept_
+#%%
+xx = np.linspace(X2_new[:,0].min()-1,X2_new[:,0].max()+1)
+yy = np.linspace(X2_new[:,1].min()-1,X2_new[:,1].max()+1)
+#%%
+XX, YY = np.meshgrid(xx,yy)
+zz = (coef[0] * XX + coef[1] * YY + intercept) / -coef[2]
+zz1 = (coef[0] * XX + coef[1] * YY + intercept +1) / -coef[2]
+zz2 = (coef[0] * XX + coef[1] * YY + intercept -1) / -coef[2]
+#%%
+fig = plt.figure(figsize=(6,6))
+ax = fig.add_subplot(111,projection='3d')
+ax.plot_surface(XX, YY, zz, rstride=8, cstride=8, alpha=0.5, color='lightgreen')
+
+
+ax.scatter(df2['x1'],df2['x2'],df2['x3'],c='class',data=df2)
+ax.view_init(5,70)
+
+plt.show
+
+```
+
+    
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm3dresult.png">
+
+```python
+ZZ = XX ** 2 + YY ** 2
+
+# np.ravel : 다차원 배열을 1차원으로 데이터 변환
+dec = linear_svm3.decision_function(np.c_[XX.ravel(), YY.ravel(), ZZ.ravel()])
+
+# plt.contourf : 등고선을 그려준다
+plt.contourf(XX, YY, dec.reshape(XX.shape), levels=[dec.min(), 0, dec.max()],alpha=0.5)
+plt.scatter('x1','x2',c='class',data=df2)
+
+plt.show()
+```
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinear3dto2d.png">
+
+    
 ### 3. Kernel SVM
 
 ### 4. Multiclass SVM
