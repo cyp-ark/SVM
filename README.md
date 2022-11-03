@@ -34,7 +34,7 @@ plt.scatter('x1','x2',c='class',data=df)
 ```
 
 
-`![](https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmdata.png)`
+<p align="center><img src="https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmdata.png">
 
 
 ```python
