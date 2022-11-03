@@ -154,7 +154,7 @@ plt.show
 ```
 
     
-<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvmdresults.png">
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvmresults.png">
 
 <br/>앞서 예상한대로 xy평면에 거의 평행한 분류 경계면이 만들어져 두 뷴류를 구별하고 있는 것을 알 수 있다. 하지만 본래의 데이터는 2차원 데이터 였기 때문에 서포트 벡터 머신을 통해 분류한 결과를 다시 저차원으로 복원시켜야 한다.
 
