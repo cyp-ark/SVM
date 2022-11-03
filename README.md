@@ -33,6 +33,10 @@ df['class'] = y
 plt.scatter('x1','x2',c='class',data=df)
 ```
 
+
+![](https://github.com/cyp-ark/SVM/blob/main/linearsvmdata.png)
+
+
 ```python
 #선형 서포트 벡터 머신 정의 및 분류 결과 플롯
 from sklearn.svm import LinearSVC
@@ -52,6 +56,8 @@ plt.ylim([min(df['x2'])-1,max(df['x2'])+1])
 
 plt.show()
 ```
+
+![](https://github.com/cyp-ark/SVM/blob/main/%EA%B7%B8%EB%A6%BC1.png)
 
 ### 2. Non-linear SVM
 ```python
