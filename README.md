@@ -34,7 +34,7 @@ plt.scatter('x1','x2',c='class',data=df)
 ```
 
 
-![](https://github.com/cyp-ark/SVM/blob/main/linearsvmdata.png)
+<p align="center><img src="https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmdata.png">
 
 
 ```python
@@ -57,7 +57,7 @@ plt.ylim([min(df['x2'])-1,max(df['x2'])+1])
 plt.show()
 ```
 
-![](https://github.com/cyp-ark/SVM/blob/main/%EA%B7%B8%EB%A6%BC1.png)
+![](https://github.com/cyp-ark/SVM/blob/main/plot/linearsvmresult.png)
 
 ### 2. Non-linear SVM
 ```python
@@ -69,6 +69,7 @@ df2['class'] = y2
 plt.scatter('x1','x2',c='class',data=df2)
 ```
 
+![](https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm.png)
 
 
 ### 3. Kernel SVM
