@@ -233,7 +233,45 @@ plt.ylim([min(df3['x2'])-1,max(df3['x2'])+1])
 plt.show()
 ```
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmrbfc.png">
+<br/> < C값에 따른 rbf kernel SVM의 분류 경계면 변화 >
 
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/kernelsvmrbfgamma.png">
+<br/> < gamma값에 따른 rbf kernel SVM의 분류 경계면 변화 >
 
 ### 4. Multiclass SVM
+```python
+X4, y4 = datasets.make_blobs(random_state=17)
 
+df4 = pd.DataFrame(X4, columns=['x1', 'x2'])
+df4['class'] = y4
+
+plt.scatter('x1', 'x2', c='class', data=df4)
+```
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/multiclasssvmdata.png">
+
+```python
+linear_svm4 = LinearSVC().fit(X4,y4)
+
+line = np.linspace(-15,15)
+
+fig = plt.figure()
+
+plt.scatter('x1', 'x2', c='class',data=df4)
+
+for coef, intercept in zip(linear_svm4.coef_,linear_svm4.intercept_):
+    plt.plot(line,-(line*coef[0]+intercept)/coef[1])
+    plt.fill_between(line,-(line*coef[0]+intercept+1)/coef[1],-(line*coef[0]+intercept-1)/coef[1],alpha=0.3)
+
+plt.xlim([min(df4['x1'])-1,max(df4['x1'])+1])
+plt.ylim([min(df4['x2'])-1,max(df4['x2'])+1])
+
+plt.show()
+```
+<p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/multiclasssvm.png">
+
+
+
+## 4. Reference
+1. 데이터 사이언스 스쿨 - 5.2 분류용 가상 데이터 생성 [[Link]](https://datascienceschool.net/03%20machine%20learning/09.02%20%EB%B6%84%EB%A5%98%EC%9A%A9%20%EA%B0%80%EC%83%81%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%83%9D%EC%84%B1.html)
+2. 초롱스쿨 - [Python]분류분석 - SVM(Support Vector Machine) [[Link]](https://studychfhd.tistory.com/224)
+3. scikit learn - 1.4 Support Vector Machinces [[Link]](https://scikit-learn.org/stable/modules/svm.html)
