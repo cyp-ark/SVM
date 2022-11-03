@@ -98,7 +98,7 @@ plt.show()
 
 
 <br/>두 분류의 데이터가 원형으로 분포하고 있기 때문에 서포트 벡터 머신이 명확한 선형 경계면을 만들어내지 못한 것을 알 수 있다. 그렇다면 이러한 데이터의 분포에 대해서는 어떻게 서포트 벡터 머신을 적용할 수 있을까?<br/><br/>
-현재의 데이터에서 x,y 이외에 새로운 좌표축인 z를 정의하고 $z=x^2+y^2$라 하자.
+현재의 데이터에서 $x, y$ 이외에 새로운 좌표축 $z$를 정의하고 $z=x^2+y^2$라 하자. 그리고 이러한 3차원 좌표를 공간에 시각화 하면 다음과 같을 것이다.
 
 
     
@@ -120,6 +120,10 @@ ax.view_init(0,45)
 plt.show()
 ```
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm3d.png">
+
+<br/>위의 시각화 결과를 살펴보자면 이전의 2차원 공간에 있을 때와 비교해 xy평면에 평행한 분류 경계면을 만들면 두 분류를 구분할 수 있어 보인다.
+<br/>3차원 공간에서 서포트 벡터 머신을 적용하여 분류 경계면을 만든 결과는 다음과 같다.
+
 
 ```python
 linear_svm3 = LinearSVC().fit(X2_new,y2)
@@ -149,6 +153,8 @@ plt.show
     
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinearsvm3dresult.png">
 
+<br/>보다싶이 
+
 ```python
 ZZ = XX ** 2 + YY ** 2
 
@@ -163,8 +169,11 @@ plt.show()
 ```
 <p align="center"> <img src="https://github.com/cyp-ark/SVM/blob/main/plot/nonlinear3dto2d.png">
 
+서포트 벡터 머신은 본래 선형분류기이지만 선형이 아닌 기존의 저차원 데이터를 고차원으로 맵핑시켜 고차원 공간에서 서포트 벡터 머신을 통해 선형 분류 경계면을 만든 후 다시 원래의 저차원 공간으로 복원시키면 선형 분류기 이지만 비선형 분류 경계면 처럼 동작하게 할 수 있다.
     
 ### 3. Kernel SVM
+이전 예제의 경우 데이터 값들이 원점을 중심으로 두 분류가 분포 되어있었고, 비교적 간단한 고차원으로의 맵핑을 통해 서포트 벡터 머신을 이용한 분류 경계면을 찾을 수 있었다. 그렇다면 우리는 비선형적인 분포를 가진 데이터에 대해 서포트 벡터 머신을 적용해 분류 경계면을 찾으려고 하면 그때마다 항상 어떠한 임의의 고차원에 대해서 데이터를 맵핑한 후 서포트 벡터 머신을 적용해야할까? 정답은 "아니오"이다.
+<br/>
 
 ### 4. Multiclass SVM
 
