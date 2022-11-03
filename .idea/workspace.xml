@@ -46,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667431323969</updated>
-      <workItem from="1667431325997" duration="11970000" />
+      <workItem from="1667431325997" duration="14061000" />
     </task>
     <servers />
   </component>
@@ -58,7 +58,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
           <url>notebook:///Users/chanyoungpark/Documents/GitHub/SVM/code.ipynb</url>
-          <line>29</line>
+          <line>32</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
