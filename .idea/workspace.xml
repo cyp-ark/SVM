@@ -34,6 +34,7 @@
     "last_opened_file_path": "/Users/chanyoungpark/Documents/GitHub/SVM",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
@@ -45,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667431323969</updated>
-      <workItem from="1667431325997" duration="2025000" />
+      <workItem from="1667431325997" duration="10740000" />
     </task>
     <servers />
   </component>
